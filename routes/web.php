@@ -14,11 +14,14 @@ use App\Http\Controllers\ContactController;
 |
 */
 
+
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
-Route::post('/contacts/confirm', [ContactController::class, 'confirm'])->name('contacts.confirm');
-Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
-Route::post('/contacts/thanks', [ContactController::class, 'thanks'])->name('contacts.thanks');
+Route::middleware(['auth', 'verified'])->group(function (){
+    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
+    Route::post('/contacts/confirm', [ContactController::class, 'confirm'])->name('contacts.confirm');
+    Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
+    Route::get('/contacts/thanks', [ContactController::class, 'thanks'])->name('contacts.thanks');
+});

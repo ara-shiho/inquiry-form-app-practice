@@ -25,7 +25,15 @@ Route::get('/hello', function () {
     ]);
 });
 
-Route::middleware('auth:sanctum')->group(function () {Route::get('/contacts', [ContactController::class, 'index'])->name('api.contacts.index');});
-Route::post('/contacts/confirm', [ContactController::class, 'confirm'])->name('api.contacts.confirm');
-Route::post('/contacts', [ContactController::class, 'store'])->name('api.contacts.store');
-Route::post('/contacts/thanks', [ContactController::class, 'thanks'])->name('api.contacts.thanks');
+Route::post('/login', [ContactController::class, 'login'])->name('api.login');
+
+Route::middleware(['auth:sanctum', 'verified'])->name('api.')->group(function () {
+    Route::get('/contacts', [ContactController::class, 'index'])->name('contacts.index');
+    Route::post('/contacts/confirm', [ContactController::class, 'confirm'])->name('contacts.confirm');
+    Route::post('/contacts', [ContactController::class, 'store'])->name('contacts.store');
+    Route::get('/contacts/thanks', [ContactController::class, 'thanks'])->name('contacts.thanks');
+    Route::get('/contacts/{id}', [ContactController::class, 'show'])->name('contacts.show');
+    Route::post('/logout', [ContactController::class, 'logout'])->name('logout');
+});
+
+

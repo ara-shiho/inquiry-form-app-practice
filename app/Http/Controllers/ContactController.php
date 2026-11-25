@@ -21,9 +21,9 @@ class ContactController extends Controller
      */
     public function confirm(ContactFormRequest $request)
     {
-        $validated = $request->validated();
+        $data = $request->validated();
 
-        return view('confirm', compact('validated'));
+        return view('confirm', compact('data'));
     }
 
     /**
@@ -31,7 +31,11 @@ class ContactController extends Controller
      */
     public function store(ContactFormRequest $request)
     {
-        Contact::create($request->validated());
+        $data = $request->validated();
+        $data['user_id'] = auth()->id();
+
+        Contact::create($data);
+
         return redirect()->route('contacts.thanks');
     }
 

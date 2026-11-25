@@ -14,6 +14,7 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 
+
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -54,5 +55,11 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::registerView(function () {
             return view('auth.register');
         });
+
+        Fortify::verifyEmailView(function () {
+            return view('auth.verify-email');
+            });
+
     }
+
 }
